@@ -3316,22 +3316,26 @@ static inline void flow_spec_complete_dump(int level, struct frame *frm)
 	p_indent(level, frm);
 	printf("status 0x%2.2x handle %d flags %d %s\n",
 				evt->status, btohs(evt->handle), evt->flags,
-				evt->direction == 0 ? "outgoing" : "incoming");
+				evt->spec.direction == 0 ?
+				"outgoing" : "incoming");
 
 	if (evt->status > 0) {
 		p_indent(level, frm);
 		printf("Error: %s\n", status2str(evt->status));
 	} else {
 		p_indent(level, frm);
-		printf("Service type: %d\n", evt->qos.service_type);
+		printf("Service type: %d\n", evt->spec.service_type);
 		p_indent(level, frm);
-		printf("Token rate: %d\n", btohl(evt->qos.token_rate));
+		printf("Token rate: %d\n", btohl(evt->spec.token_rate));
 		p_indent(level, frm);
-		printf("Peak bandwith: %d\n", btohl(evt->qos.peak_bandwidth));
+		printf("Token Bucket Size: %d\n",
+			btohl(evt->spec.token_bucket_size));
 		p_indent(level, frm);
-		printf("Latency: %d\n", btohl(evt->qos.latency));
+		printf("Peak Bandwidth: %d\n",
+			btohl(evt->spec.peak_bandwidth));
 		p_indent(level, frm);
-		printf("Delay variation: %d\n", btohl(evt->qos.delay_variation));
+		printf("Access Latency: %d\n",
+			btohl(evt->spec.access_latency));
 	}
 }
 
